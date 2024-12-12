@@ -1,6 +1,6 @@
 <x-layout>
     {{-- store title from web routes --}}
-    <x-slot:title>{{ $title }}</x-slot>
+    <x-slot:post_title>{{ $title }}</x-slot>
 
     @foreach ($posts as $value)
     <article class="py-5 max-w-screen-md border-b border-gray-300">

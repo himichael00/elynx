@@ -17,7 +17,7 @@
         {{-- NAVBAR END --}}
     
         {{-- HEADER START --}}
-        <x-header>{{ $title }}</x-header>
+        <x-header>{{ $post_title }}</x-header>
         {{-- HEADER END --}}
 
         {{-- MAIN START --}}

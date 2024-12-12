@@ -1,6 +1,6 @@
 <x-layout>
     {{-- store title from web routes --}}
-    <x-slot:title>{{ $title }}</x-slot>
+    <x-slot:post_title>{{ $title }}</x-slot>
 
     <article class="py-5 max-w-screen-md">
         <h2 class="mb-1 text-3xl tracking-tight font-bold text-gray-900">{{ $value['title'] }}</h2>
