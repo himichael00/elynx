@@ -11,6 +11,8 @@ class Post extends Model
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;
 
+    // eager loading
+    protected $with = ['author', 'category'];
     //  to define tables_name
     protected $table = 'elynx_posts';
     // to define what column allowed to fill
