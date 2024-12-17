@@ -9,7 +9,7 @@
         </a>
 
         <div class="text-base text-gray-500">
-            <a href="#">{{ $value['author'] }}</a> | {{ $value['created_at']->diffForHumans() }}
+            <a href="/authors/{{ $value->author->username }}" class="hover:underline">{{ $value->author->name }}</a> in <a href="/category/{{ $value->category->slug }}" class="hover:underline">{{ $value->category->category_title }}</a> | {{ $value['created_at']->diffForHumans() }}
         </div>
 
         <p class="my-4 font-light">
