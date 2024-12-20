@@ -19,30 +19,39 @@
         <div class="hidden md:block">
             <div class="ml-4 flex items-center md:ml-6">
 
-            <!-- Profile dropdown -->
-            <div class="relative ml-3">
-                <div>
-                <button type="button" @click="isOpen = !isOpen" class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                    <span class="absolute -inset-1.5"></span>
-                    <span class="sr-only">Open user menu</span>
-                    <img class="size-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                </button>
+            @auth
+                <!-- Profile dropdown -->
+                <div class="relative ml-3">
+                    <div>
+                        <button id="dropdownDefaultButton" @click="isOpen = !isOpen" data-dropdown-toggle="dropdown" class="text-white bg-gradient-to-r from-red-600 via-orange-600 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                            Welcome, {{ auth()->user()->name }} 
+                            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                            </svg>
+                        </button>
+                    </div>
+                        <div 
+                        x-show="isOpen"
+                        x-transition:enter="transition ease-out duration-100 transform"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-75 transform"
+                        x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95"
+                        class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                        <!-- Active: "bg-gray-100 outline-none", Not Active: "" -->
+                        <x-nav-link class="block px-4 py-2 text-sm text-gray-700 hover:scale-75" href="/dashboard" :active="request()->is('dashboard')">Your Profile</x-nav-link>
+                            <form action="/logout" method="POST">
+                                @csrf
+                                <button type="submit" class="block px-4 py-2 text-sm text-gray-700 hover:scale-75">
+                                    Sign Out
+                                </button>
+                            </form>
+                        </div>
                 </div>
-                <div 
-                x-show="isOpen"
-                x-transition:enter="transition ease-out duration-100 transform"
-                x-transition:enter-start="opacity-0 scale-95"
-                x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-75 transform"
-                x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95"
-                class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                <!-- Active: "bg-gray-100 outline-none", Not Active: "" -->
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
-                </div>
-            </div>
+            @else
+                <a class="text-gray-900 bg-gradient-to-r from-red-600 via-orange-600 to-orange-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" href="/login" :active="request()->is('login')">Sign In</a>
+            @endauth
             </div>
         </div>
         <div class="-mr-2 flex md:hidden">
