@@ -5,10 +5,8 @@ use App\Models\User;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\DashboardController;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\DashboardPostController;
 
 Route::get('/', function () {
     return view('home', ['title' => 'Home Page']);
@@ -26,7 +24,7 @@ Route::get('/posts', function () {
 });
 
 Route::get('/posts/{value:slug}', function(Post $value){
-    return view('value', ['title' => 'Article Detail', 'result' => $value]);
+    return view('value', ['title' => 'Article Detail', 'post' => $value]);
 });
 
 Route::get('/authors/{user:username}', function(User $user){
@@ -53,4 +51,8 @@ Route::get('/register', [RegisterController::class, 'index'])->middleware('guest
 
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+Route::get('/dashboard', function() {
+    return view('dashboard.index');
+})->middleware('auth');
+ 
+Route::resource('/dashboard/posts', DashboardPostController::class)->parameters(['posts' => 'dashboardPost'])->middleware('auth');

@@ -23,19 +23,19 @@
                     <a href="/posts" class="font-medium text-sm text-blue-600 hover:underline">&laquo; Back To All Posts</a>
                     <address class="flex items-center my-6 not-italic">
                         <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-                            <img class="mr-4 w-16 h-16 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="{{ $result->author->name }}">
+                            <img class="mr-4 w-16 h-16 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="{{ $post->author->name }}">
                             <div>
-                                <a href="/posts?authors={{ $result->author->username }}" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">{{ $result->author->name }}</a>
-                                <p class="text-base text-gray-500 dark:text-gray-400">{{ $result->created_at->diffForHumans() }}</p>
-                                <span class="bg-{{ $result->category->color }}-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800">
-                                    <a href="/posts?category={{ $result->category->slug }}" class="hover:underline">{{ $result->category->category_title }}</a>
+                                <a href="/posts?authors={{ $post->author->username }}" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">{{ $post->author->name }}</a>
+                                <p class="text-base text-gray-500 dark:text-gray-400">{{ $post->created_at->diffForHumans() }}</p>
+                                <span class="bg-{{ $post->category->color }}-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800">
+                                    <a href="/posts?category={{ $post->category->slug }}" class="hover:underline">{{ $post->category->category_title }}</a>
                                 </span>
                             </div>
                         </div>
                     </address>
-                    <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">{{ $result->title }}</h1>
+                    <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">{{ $post->title }}</h1>
                 </header>
-                <p>{{ $result->body }}</p>
+                <p>{{ $post->body }}</p>
             </article>
         </div>
     </main>
