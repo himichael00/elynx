@@ -23,7 +23,7 @@
             <h2 class="mb-1 text-3xl tracking-tight font-bold text-gray-900">{{ $value['title'] }}</h2>
         </a>
         <p class="my-4 font-light">
-            {{ Str::limit($value['body'], 100) }}
+            {!! Str::limit($value->body, 100) !!}
         </p>
         <div class="flex justify-between items-center">
             <div class="flex items-center space-x-4">

@@ -19,7 +19,7 @@
               <div class="shrink-0">
                 <img class="size-6" src="{{ asset('./assets/img/outline/house-2.svg') }}" alt="Your Company">
               </div>
-                <title>shop</title>
+                <title>Home</title>
                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <g transform="translate(-1716.000000, -439.000000)" fill="#FFFFFF" fill-rule="nonzero">
                     <g transform="translate(1716.000000, 291.000000)">
@@ -44,12 +44,12 @@
 
         <li class="mt-0.5 w-full">
           <a class="py-2.7 text-sm my-0 mx-4 flex items-center whitespace-nowrap px-4 font-semibold text-slate-700 hover:bg-orange-500 hover:shadow-soft-2xl rounded-lg
-            {{ Request::is('dashboard/posts') ? 'bg-orange-500 shadow-soft-2xl text-white' : '' }}" href="/dashboard/posts">
+            {{ Request::is('dashboard/posts*') ? 'bg-orange-500 shadow-soft-2xl text-white' : '' }}" href="/dashboard/posts">
             <div class="from-orange-700 to-pink-500 shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white">
               <div class="shrink-0">
                 <img class="size-6" src="{{ asset('./assets/img/outline/box.svg') }}" alt="Your Post">
               </div>
-                <title>office</title>
+                <title>My Posts</title>
                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <g transform="translate(-1869.000000, -293.000000)" fill="#FFFFFF" fill-rule="nonzero">
                     <g transform="translate(1716.000000, 291.000000)">

@@ -17,7 +17,7 @@
                             </div>
                         </div>
                     </address>
-                    <div class="flex">
+                    <div class="flex d-inline">
                         <a href="/dashboard/posts" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-xs px-2 py-1 text-center me-2 mb-2">
                             <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 18 18"><title>arrow door out 3</title><g stroke-width="1.5" fill="none" stroke="#FFFF" class="nc-icon-wrapper"><path d="M11.75,5.75V3.25c0-.552-.448-1-1-1H4.25c-.552,0-1,.448-1,1V14.75c0,.552,.448,1,1,1h6.5c.552,0,1-.448,1-1v-2.5" stroke-linecap="round" stroke-linejoin="round"></path><polyline points="14.5 6.25 17.25 9 14.5 11.75" stroke-linecap="round" stroke-linejoin="round" stroke="#FFFF"></polyline><line x1="17.25" y1="9" x2="11.25" y2="9" stroke-linecap="round" stroke-linejoin="round" stroke="#FFFF"></line><path d="M3.457,2.648l3.321,2.059c.294,.182,.473,.504,.473,.85v6.887c0,.346-.179,.667-.473,.85l-3.322,2.06" stroke-linecap="round" stroke-linejoin="round"></path></g>
                             </svg>
@@ -28,15 +28,18 @@
                             </svg>
                             Edit
                         </a>
-                        <a href="" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-xs px-2 py-1 text-center me-2 mb-2">
-                            <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 18 18"><title>trash</title><g stroke-width="1.5" fill="none" stroke="#FFFF" class="nc-icon-wrapper"><line x1="2.75" y1="4.25" x2="15.25" y2="4.25" stroke-linecap="round" stroke-linejoin="round" stroke="#FFFF"></line><path d="M6.75,4.25v-1.5c0-.552,.448-1,1-1h2.5c.552,0,1,.448,1,1v1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#FFFF"></path><path d="M13.5,6.75l-.4,7.605c-.056,1.062-.934,1.895-1.997,1.895H6.898c-1.064,0-1.941-.833-1.997-1.895l-.4-7.605" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
-                            Delete
-                        </a>
+                        <form action="/dashboard/posts/{{ $post->slug }}" method="POST" onclick="return confirm('Are You Sure Wants To Delete This Post?')" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-xs px-2 py-1 text-center me-2 mb-2">
+                            @method('delete')
+                            @csrf
+                            <button>
+                                <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 18 18"><title>trash</title><g stroke-width="1.5" fill="none" stroke="#FFFF" class="nc-icon-wrapper"><line x1="2.75" y1="4.25" x2="15.25" y2="4.25" stroke-linecap="round" stroke-linejoin="round" stroke="#FFFF"></line><path d="M6.75,4.25v-1.5c0-.552,.448-1,1-1h2.5c.552,0,1,.448,1,1v1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#FFFF"></path><path d="M13.5,6.75l-.4,7.605c-.056,1.062-.934,1.895-1.997,1.895H6.898c-1.064,0-1.941-.833-1.997-1.895l-.4-7.605" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+                                Delete
+                            </button>
+                        </form>
                     </div>
-                    
                     <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">{{ $post->title }}</h1>
                 </header>
-                <p>{{ $post->body }}</p>
+                <p>{!! $post->body !!}</p>
             </article>
         </div>
     </main>

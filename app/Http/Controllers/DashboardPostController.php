@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DashboardPost;
 use App\Models\Post;
-use Illuminate\Container\Attributes\Auth;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\DashboardPost;
+use Illuminate\Container\Attributes\Auth;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class DashboardPostController extends Controller
 {
@@ -24,7 +26,9 @@ class DashboardPostController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.posts.create', [
+            'categories' => Category::all()
+        ]);
     }
 
     /**
@@ -32,7 +36,20 @@ class DashboardPostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validate data
+        $store_data = $request->validate([
+            'title' => 'required|max:255',
+            'slug' => 'required|unique:elynx_posts',
+            'category_id' => 'required',
+            'body' => 'required'
+        ]);
+
+        // validate author id before create post
+        $store_data['author_id'] = auth()->user()->id;
+
+        Post::create($store_data);
+
+        return redirect('/dashboard/posts')->with('success', 'New Post Has Been Added');
     }
 
     /**
@@ -43,6 +60,7 @@ class DashboardPostController extends Controller
         return view('dashboard.posts.show', [
             'post' => $dashboardPost
         ]);
+
     }
 
     /**
@@ -64,8 +82,16 @@ class DashboardPostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DashboardPost $dashboardPost)
+    public function destroy(Post $dashboardPost)
     {
-        //
+        Post::destroy($dashboardPost->id);
+
+        return  redirect('/dashboard/posts')->with('success', 'Post Has Been Deleted');
+    }
+
+    public function checkSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
+        return response()->json(['slug' => $slug]);
     }
 }

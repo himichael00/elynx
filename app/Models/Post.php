@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Post extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;
+    use Sluggable;
 
     // eager loading
     protected $with = ['author', 'category'];
@@ -19,8 +21,8 @@ class Post extends Model
     // to define what column allowed to fill
     protected $fillable = [
         'title',
-        'author', 
-        'category',
+        'author_id', 
+        'category_id',
         'slug', 
         'body'
     ];
@@ -49,12 +51,15 @@ class Post extends Model
             /* === EXISTS QUERY SECTION === */
 
             // when we go inside a category, this query will be executed since we neeed to find data inside category same goes on the others
+
+            /* Filter products to include only those whose related category has a slug equal to the provided $category value. */
             $query->when(isset($filters['category']) ? $filters['category'] : false, function($query, $category) {
                 $query->whereHas('category', function($query) use ($category) {
                     $query->where('slug', $category);
                 });
             });
 
+            /* Filter products to include only those whose related author has a username equal to the provided $author value. */
             $query->when(isset($filters['authors']) ? $filters['authors'] : false, function ($query, $author) {
                 $query->whereHas('author', function($query) use ($author) {
                     $query->where('username', $author);
@@ -65,5 +70,14 @@ class Post extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }
