@@ -37,7 +37,7 @@ class DashboardPostController extends Controller
     public function store(Request $request)
     {
         // validate data
-        $store_data = $request->validate([
+        $validate_data = $request->validate([
             'title' => 'required|max:255',
             'slug' => 'required|unique:elynx_posts',
             'category_id' => 'required',
@@ -45,9 +45,9 @@ class DashboardPostController extends Controller
         ]);
 
         // validate author id before create post
-        $store_data['author_id'] = auth()->user()->id;
+        $validate_data['author_id'] = auth()->user()->id;
 
-        Post::create($store_data);
+        Post::create($validate_data);
 
         return redirect('/dashboard/posts')->with('success', 'New Post Has Been Added');
     }
@@ -66,17 +66,40 @@ class DashboardPostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(DashboardPost $dashboardPost)
+    public function edit(Post $dashboardPost)
     {
-        //
+        return view('dashboard.posts.edit', [
+            'post' => $dashboardPost,
+            'categories' => Category::all()
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DashboardPost $dashboardPost)
+    public function update(Request $request, Post $dashboardPost)
     {
-        //
+        // validate data
+        $rules = [
+            'title' => 'required|max:255',
+            'category_id' => 'required',
+            'body' => 'required'
+        ];
+
+        // check slug, if the new slug filled by the user is not the same as before that saved in database
+        // do the validation again, which slug must be unique and required
+        // if slug is the same then do nothing
+        if ($request->slug != $dashboardPost->slug) {
+            $rules['slug'] ='required|unique:elynx_posts';
+        }
+
+        $validate_data = $request->validate($rules);
+
+        $validate_data['author_id'] = auth()->user()->id;
+
+        Post::where('id', $dashboardPost->id)->update($validate_data);
+
+        return redirect('/dashboard/posts')->with('success', 'Post Has Been Updated');
     }
 
     /**
@@ -86,7 +109,7 @@ class DashboardPostController extends Controller
     {
         Post::destroy($dashboardPost->id);
 
-        return  redirect('/dashboard/posts')->with('success', 'Post Has Been Deleted');
+        return redirect('/dashboard/posts')->with('success', 'Post Has Been Deleted');
     }
 
     public function checkSlug(Request $request)

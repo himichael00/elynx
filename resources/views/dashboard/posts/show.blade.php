@@ -23,7 +23,7 @@
                             </svg>
                             Back to all my posts
                         </a>
-                        <a href="" class="text-white bg-gradient-to-r from-yellow-400 via-yellow-400 to-yellow-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:focus:ring-yellow-500 font-medium rounded-lg text-xs px-2 py-1 text-center me-2 mb-2">
+                        <a href="/dashboard/posts/{{ $post->slug }}/edit" class="text-white bg-gradient-to-r from-yellow-400 via-yellow-400 to-yellow-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:focus:ring-yellow-500 font-medium rounded-lg text-xs px-2 py-1 text-center me-2 mb-2">
                             <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 18 18"><title>pen 3</title><g stroke-width="1.5" fill="none" stroke="#FFFF" class="nc-icon-wrapper"><path d="M10,5l3.586,3.586c.781,.781,.781,2.047,0,2.828l-1.586,1.586" stroke-linecap="round" stroke-linejoin="round" stroke="#FFFF"></path><path d="M2.75,15.25s3.599-.568,4.546-1.515c.947-.947,7.327-7.327,7.327-7.327,.837-.837,.837-2.194,0-3.03-.837-.837-2.194-.837-3.03,0,0,0-6.38,6.38-7.327,7.327s-1.515,4.546-1.515,4.546h0Z" stroke-linecap="round" stroke-linejoin="round"></path></g>
                             </svg>
                             Edit
