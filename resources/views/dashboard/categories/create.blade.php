@@ -53,6 +53,27 @@
                                 </p>
                             @enderror
                         </div>
+                        <div class="sm:col-span-2">
+                            <label for="color" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category Color</label>
+                            <select 
+                                name="color" 
+                                id="color"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            >
+                                <option value="">Select a color</option>
+                                @foreach ($category_colors as $color)
+                                    <option value="{{ explode('-', $color->color_name)[1] }}" 
+                                        {{ old('color') === $color->color_name ? 'selected' : '' }}>
+                                        {{ ucfirst(explode('-', $color->color_name)[1]) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('color')
+                                <p class="mt-2 text-sm text-red-500">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
                     </div>
                     <button type="submit" class="text-white mt-5 bg-gradient-to-r from-red-400 via-red-600 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Create Category</button>
                 </form>
@@ -80,6 +101,10 @@
     <!-- end cards -->
 
     <script>
+        function forceLower(strInput){
+            strInput.value = strInput.value.toLowerCase();
+        }
+
         const category_title = document.querySelector('#category_title');
         const slug = document.querySelector('#slug');
 

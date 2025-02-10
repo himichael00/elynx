@@ -18,7 +18,8 @@ class Category extends Model
     // to define what column allowed to fill
     protected $fillable = [
         'category_title',
-        'slug'
+        'slug',
+        'color'
     ];
 
     // function name should be similliar same as the foreign key column on this table

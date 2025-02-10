@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Color;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -26,7 +27,9 @@ class AdminCategoryController extends Controller
      */
     public function create()
     {
-        return view('dashboard.categories.create');
+        return view('dashboard.categories.create', [
+            'category_colors' => Color::all()
+        ]);
     }
 
     /**
@@ -37,7 +40,8 @@ class AdminCategoryController extends Controller
         //validate data
         $validate_data = $request->validate([
             'category_title' => 'required|max:255',
-            'slug' => 'required|unique:elynx_post_categories'
+            'slug' => 'required|unique:elynx_post_categories',
+            'color' => 'required|max:50'
         ]);
 
         Category::create($validate_data);
