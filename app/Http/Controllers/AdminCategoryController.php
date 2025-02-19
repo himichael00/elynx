@@ -62,7 +62,10 @@ class AdminCategoryController extends Controller
      */
     public function edit(category $category)
     {
-        //
+        return view('dashboard.categories.edit', [
+            'categories' => $category,
+            'category_colors' => Color::all()
+        ]);
     }
 
     /**
@@ -70,7 +73,27 @@ class AdminCategoryController extends Controller
      */
     public function update(Request $request, category $category)
     {
-        //
+        // validate data
+        $rules = [
+            'category_title' => 'required|max:255',
+            'slug' => 'required|unique:elynx_post_categories',
+            'color' => 'required|max:50'
+        ];
+
+        // check slug, if the new slug filled by the user is not the same as before that saved in database
+        // do the validation again, which slug must be unique and required
+        // if slug is the same then do nothing
+        if ($request->slug != $category->slug) {
+            $rules['slug'] ='required|unique:elynx_posts';
+        }
+
+        $validate_data = $request->validate($rules);
+
+        // $validate_data['author_id'] = auth()->user()->id;
+
+        Category::where('id', $category->id)->update($validate_data);
+
+        return redirect('/dashboard/categories')->with('success', 'Categories Has Been Updated');
     }
 
     /**

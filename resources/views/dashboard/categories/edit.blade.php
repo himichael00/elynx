@@ -5,9 +5,9 @@
         <div class="w-full px-6 px-4 mx-auto">
             <ol class="flex flex-wrap pt-1 mr-12 bg-transparent rounded-lg sm:mr-16">
                 <li class="text-sm leading-normal">
-                <a class="opacity-50 text-slate-700" href="javascript:;">Create New Category</a>
+                <a class="opacity-50 text-slate-700" href="javascript:;">Edit Post</a>
                 </li>
-                <li class="text-sm pl-2 capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/']" aria-current="page">Current Categories</li>
+                <li class="text-sm pl-2 capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/']" aria-current="page">My Posts</li>
             </ol>
         </div>
     </div>
@@ -17,8 +17,9 @@
 
         <section class="bg-white dark:bg-gray-900 rounded-lg">
             <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-                <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new category</h2>
-                <form method="POST" action="/dashboard/categories">
+                <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Edit post</h2>
+                <form method="POST" action="/dashboard/categories/{{ $categories->slug }}">
+                    @method('put')
                     @csrf
                     <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                         <div class="sm:col-span-2">
@@ -29,7 +30,7 @@
                                 id="category_title" 
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
                                 placeholder="Type category name" 
-                                value="{{ old('category_title') }}"
+                                value="{{ old('category_title', $categories->category_title) }}"
                             >
                             @error('category_title')
                                 <p class="mt-2 text-sm text-red-500">
@@ -45,7 +46,7 @@
                                 id="slug" 
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
                                 placeholder="Type slug name" 
-                                value="{{ old('slug') }}"
+                                value="{{ old('slug', $categories->slug) }}"
                             >
                             @error('slug')
                                 <p class="mt-2 text-sm text-red-500">
@@ -61,9 +62,11 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             >
                                 @foreach ($category_colors as $color)
-                                    @if (old('color') == explode('-', $color->color_name)[1])
+                                {{-- check if submitted value exist or not, if not then goes to existing $categories->color value --}}
+                                    @if (old('color', $categories->color) == explode('-', $color->color_name)[1])
                                         <option value="{{ explode('-', $color->color_name)[1] }}" selected>{{ ucfirst(explode('-', $color->color_name)[1]) }}</option>
                                     @else
+                                    {{-- if not matched, just render the other color as another option --}}
                                         <option value="{{ explode('-', $color->color_name)[1] }}">{{ ucfirst(explode('-', $color->color_name)[1]) }}</option>
                                     @endif
                                 @endforeach
@@ -74,8 +77,7 @@
                                 </p>
                             @enderror
                         </div>
-                    </div>
-                    <button type="submit" class="text-white mt-5 bg-gradient-to-r from-red-400 via-red-600 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Create Category</button>
+                    <button type="submit" class="text-white mt-5 bg-gradient-to-r from-red-400 via-red-600 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Update Post</button>
                 </form>
             </div>
         </section>
@@ -101,11 +103,7 @@
     <!-- end cards -->
 
     <script>
-        function forceLower(strInput){
-            strInput.value = strInput.value.toLowerCase();
-        }
-
-        const category_title = document.querySelector('#category_title');
+        const categories_title = document.querySelector('#category_title');
         const slug = document.querySelector('#slug');
 
         category_title.addEventListener('change', function(){

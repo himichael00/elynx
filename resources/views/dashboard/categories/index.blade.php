@@ -70,10 +70,11 @@
                           </td>
                           <td class="px-4 py-3">
                             <div class="flex space-x-2">
-                              <a href="/dashboard/posts/{{ $value->slug }}" class="text-slate-400 hover:scale-125">
+                              {{-- <a href="/posts?category={{ $post->category->slug }}" class="hover:underline">{{ $post->category->category_title }}</a> --}}
+                              <a href="/posts?category={{ $value->slug }}" class="text-slate-400 hover:scale-125">
                                 <img class="w-5 h-5" src="{{ asset('./assets/img/outline/eye-open.svg') }}" alt="View">
                               </a>
-                              <a href="/dashboard/posts/{{ $value->slug }}/edit" class="text-slate-400 hover:scale-125">
+                              <a href="/dashboard/categories/{{ $value->slug }}/edit" class="text-slate-400 hover:scale-125">
                                 <img class="w-5 h-5" src="{{ asset('./assets/img/outline/pen-3.svg') }}" alt="Edit">
                               </a>
                               <form action="/dashboard/posts/{{ $value->slug }}" method="POST">
